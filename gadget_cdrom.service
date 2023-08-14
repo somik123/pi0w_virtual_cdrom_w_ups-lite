@@ -8,7 +8,7 @@ DefaultDependencies=no
 Type=simple
 User=root
 WorkingDirectory=/opt/gadget_cdrom
-ExecStart=/opt/gadget_cdrom/gadget_cdrom.py
+ExecStart=/opt/gadget_cdrom/gadget_cdrom_power.py
 Restart=on-failure
 
 [Install]

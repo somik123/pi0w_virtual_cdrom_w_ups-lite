@@ -1,4 +1,4 @@
-# gadget\_cdrom
+# pi0w\_virtual\_cdrom\_w\_ups-lite
 ## Requirements
 * Raspberry Pi Zero (2) (W)
 * [Waveshare 1.3inch OLED HAT](https://www.waveshare.com/wiki/1.3inch_OLED_HAT)
@@ -41,9 +41,13 @@ sudo apt install -y p7zip-full python3-rpi.gpio python3-smbus python3-spidev \
 
 ### Prepare storage
 ```sh
-# sudo ./create_image.sh
+cd /opt/gadget_cdrom/
+sudo ./create_image.sh
+
+
+
 Space available: 24G
-Size, e.g. 16G? 8G"
+Size, e.g. 16G? 8G
 Creating 8G image...
 Done!
 ```
@@ -51,11 +55,16 @@ Done!
 ### Load modules after boot
 * Add ```dtoverlay=dwc2``` to /boot/config.txt
 * Add ```dwc2``` to /etc/modules
-* Enable SPI
+* Enable SPI (for display)
+* Enable I2C (for UPS-Lite)
 ```
 sudo raspi-config
 Interfacing Options
+
 SPI
+Yes
+
+I2C
 Yes
 ```
 
@@ -63,13 +72,16 @@ Yes
 * Clone gadget_cdrom
 ```
 cd /opt
-sudo git clone https://github.com/tjmnmk/gadget_cdrom.git
+sudo git clone https://github.com/somik123/pi0w_virtual_cdrom_w_ups-lite.git
+sudo mv pi0w_virtual_cdrom_w_ups-lite gadget_cdrom
 ```
 * Enable systemd service:
 ```
+sudo chmod +x /opt/gadget_cdrom/gadget_cdrom_power.py
 sudo ln -s /opt/gadget_cdrom/gadget_cdrom.service /etc/systemd/system/gadget_cdrom.service
 sudo systemctl enable gadget_cdrom.service
 ```
+
 * reboot rpi
 ```
 sudo reboot
